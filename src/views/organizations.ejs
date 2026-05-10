@@ -1,9 +1,41 @@
 <%- include('partials/header') %>
-  <main>
-    <h1><%= title %></h1>
-    <p>Coming Soon!</p>
-  </main>
-  <%- include('partials/footer') %>
-</body>
 
-</html>
+  <main>
+    <section class="page-section">
+      <h1>Organizations</h1>
+      <p>
+        These organizations help support meaningful service projects in the community.
+      </p>
+
+      <div class="organization-grid">
+        <article class="organization-card">
+          <img src="/images/volunteers-serving-food-to-poor-people-outdoors.webp" alt="Volunteers organizing food donations">
+          <h2>Local Food Bank</h2>
+          <p>
+            The Local Food Bank helps families by collecting, organizing, and
+            distributing food donations to people in need.
+          </p>
+        </article>
+
+        <article class="organization-card">
+          <img src="/images/people_working_in_a_garden.jpg" alt="People working in a community garden">
+          <h2>Community Garden</h2>
+          <p>
+            The Community Garden supports environmental service by helping
+            volunteers grow fresh food and care for shared outdoor spaces.
+          </p>
+        </article>
+
+        <article class="organization-card">
+          <img src="/images/student_receiving_learning_support.jpg" alt="Students receiving learning support">
+          <h2>Youth Learning Center</h2>
+          <p>
+            The Youth Learning Center provides educational support, mentoring,
+            and learning activities for children and young students.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
