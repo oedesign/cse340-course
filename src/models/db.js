@@ -6,6 +6,18 @@ dotenv.config();
 const { Pool } = pg;
 
 /**
+ * Check that DB_URL was loaded from .env.
+ * If dotenv says "injected env (0)", this value is probably missing.
+ */
+console.log("DB_URL loaded:", process.env.DB_URL ? "yes" : "no");
+
+if (!process.env.DB_URL) {
+    throw new Error(
+        "DB_URL is missing. Make sure your .env file is located at C:\\cse340-course\\.env and contains DB_URL."
+    );
+}
+
+/**
  * Connection pool for PostgreSQL database.
  * 
  * A connection pool maintains a set of reusable database connections
@@ -20,19 +32,6 @@ const pool = new Pool({
     connectionString: process.env.DB_URL,
     ssl: false
 });
-
-/**
- * Common SSL Issue:
- *
- * You may encounter SSL connection errors depending on your operating system, Node.js
- * version, or PostgreSQL server settings. If you have confirmed your credentials are
- * correct but still see SSL errors, try updating the 'ssl' property in the Pool
- * configuration above to:
- *
- * ssl: {
- *     rejectUnauthorized: false
- * }
- */
 
 /**
  * Since we will modify the normal pool object in development mode, we need to create and
