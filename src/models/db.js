@@ -7,7 +7,6 @@ const { Pool } = pg;
 
 /**
  * Check that DB_URL was loaded from .env.
- * If dotenv says "injected env (0)", this value is probably missing.
  */
 console.log("DB_URL loaded:", process.env.DB_URL ? "yes" : "no");
 
@@ -18,36 +17,24 @@ if (!process.env.DB_URL) {
 }
 
 /**
- * Connection pool for PostgreSQL database.
- * 
- * A connection pool maintains a set of reusable database connections
- * to avoid the overhead of creating new connections for each request.
- * This improves performance and reduces load on the database server.
- * 
- * Uses a connection string from environment variables for simplified setup.
- * The connection string format is:
- * postgresql://username:password@host:port/database
+ * PostgreSQL connection pool.
+ *
+ * Since your database is hosted on Render, SSL is usually required,
+ * especially when connecting from your local computer.
  */
 const pool = new Pool({
     connectionString: process.env.DB_URL,
-    ssl: false
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 /**
- * Since we will modify the normal pool object in development mode, we need to create and
- * export a reference to the pool object. This allows us to use the same name for the
- * export regardless of whether we are in development or production mode.
+ * Database wrapper.
  */
 let db = null;
 
 if (process.env.NODE_ENV === "development" && process.env.ENABLE_SQL_LOGGING === "true") {
-    /**
-     * In development mode, we wrap the pool to provide query logging.
-     * This helps with debugging by showing all executed queries in the console.
-     * 
-     * The wrapper also adds timing information to help identify slow queries
-     * and tracks the number of rows affected by each query.
-     */
     db = {
         async query(text, params) {
             try {
@@ -77,12 +64,11 @@ if (process.env.NODE_ENV === "development" && process.env.ENABLE_SQL_LOGGING ===
         }
     };
 } else {
-    // In production, export the pool directly without logging overhead
     db = pool;
 }
 
 /**
- * Tests the database connection by executing a simple query.
+ * Test database connection.
  */
 const testConnection = async () => {
     try {
