@@ -2,6 +2,7 @@ import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { testConnection } from './src/models/db.js';
+import { getAllOrganizations } from './src/models/organizations.js';
 
 const NODE_ENV = 'production';
 const PORT = 3000;
@@ -40,7 +41,7 @@ app.get('/', (req, res) => {
 app.get('/organizations', async (req, res) => {
     const organizations = await getAllOrganizations();
 
-    console.log(organizations);
+    console.log('Organizations:', organizations);
 
     const title = 'Our Partner Organizations';
     res.render('organizations', { title });
