@@ -1,7 +1,18 @@
 <%- include('partials/header') %>
 
   <main>
-    <section class="page-section">
+    <ul>
+      <% organizations.forEach(organization=> { %>
+        <li>
+          <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+          <strong>
+            <%= organization.name %>
+          </strong>:
+          <%= organization.contact_email %>
+        </li>
+        <% }); %>
+    </ul>
+    <!-- <section class="page-section">
       <h1>Organizations</h1>
       <p>
         These organizations help support meaningful service projects in the community.
@@ -35,7 +46,7 @@
           </p>
         </article>
       </div>
-    </section>
+    </section> -->
   </main>
 
   <%- include('partials/footer') %>

@@ -1,9 +1,31 @@
 <%- include('partials/header') %>
-  <main>
-    <h1><%= title %></h1>
-    <p>Coming Soon!</p>
-  </main>
-<%- include('partials/footer') %>
-</body>
 
-</html>
+  <main>
+    <h1>
+      <%= title %>
+    </h1>
+
+    <p>Here are some available service projects:</p>
+
+    <ul>
+      <% projects.forEach(project=> { %>
+        <li>
+          <strong>
+            <%= project.project_date %>:
+          </strong>
+          <%= project.title %>
+            (<%= project.organization_name %>)
+              <br>
+              <span>
+                <%= project.location %>
+              </span>
+              <br>
+              <span>
+                <%= project.description %>
+              </span>
+        </li>
+        <% }); %>
+    </ul>
+  </main>
+
+  <%- include('partials/footer') %>
