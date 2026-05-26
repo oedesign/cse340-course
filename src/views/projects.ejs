@@ -5,24 +5,24 @@
       <%= title %>
     </h1>
 
-    <p>Here are some available service projects:</p>
+    <p>Here are the next five upcoming service projects:</p>
 
     <ul>
       <% projects.forEach(project=> { %>
         <li>
-          <strong>
-            <%= project.project_date %>:
-          </strong>
-          <%= project.title %>
-            (<%= project.organization_name %>)
-              <br>
-              <span>
-                <%= project.location %>
-              </span>
-              <br>
-              <span>
-                <%= project.description %>
-              </span>
+          <a href="/project/<%= project.project_id %>">
+            <%= project.title %>
+          </a>
+
+          -
+
+          <a href="/organization/<%= project.organization_id %>">
+            <%= project.organization_name %>
+          </a>
+
+          -
+
+          <%= project.project_date %>
         </li>
         <% }); %>
     </ul>
