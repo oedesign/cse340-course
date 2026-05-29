@@ -10,15 +10,18 @@
         <%= project.title %>
       </h2>
 
-      <p><strong>Description:</strong>
+      <p>
+        <strong>Description:</strong>
         <%= project.description %>
       </p>
 
-      <p><strong>Date:</strong>
+      <p>
+        <strong>Date:</strong>
         <%= project.project_date %>
       </p>
 
-      <p><strong>Location:</strong>
+      <p>
+        <strong>Location:</strong>
         <%= project.location %>
       </p>
 
@@ -28,6 +31,24 @@
           <%= project.organization_name %>
         </a>
       </p>
+
+      <section class="project-categories">
+        <h3>Categories</h3>
+
+        <% if (categories && categories.length> 0) { %>
+          <ul>
+            <% categories.forEach(category=> { %>
+              <li>
+                <a href="/category/<%= category.category_id %>">
+                  <%= category.name %>
+                </a>
+              </li>
+              <% }); %>
+          </ul>
+          <% } else { %>
+            <p>No categories listed for this project.</p>
+            <% } %>
+      </section>
       <% } else { %>
         <p>Project not found.</p>
         <% } %>
