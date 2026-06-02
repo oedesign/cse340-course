@@ -1,8 +1,11 @@
 import {
   getAllCategories,
   getCategoryDetails,
-  getProjectsByCategoryId
+  getProjectsByCategoryId,
+  getCategoriesByServiceProjectId,
+  updateCategoryAssignments
 } from '../models/categories.js';
+import { getProjectDetails } from '../models/projects.js';
 
 const showCategoriesPage = async (req, res, next) => {
   try {
@@ -40,7 +43,55 @@ const showCategoryDetailsPage = async (req, res, next) => {
   }
 };
 
+const showAssignCategoriesForm = async (req, res, next) => {
+  try {
+    const projectId = req.params.projectId;
+
+    const projectDetails = await getProjectDetails(projectId);
+
+    if (!projectDetails) {
+      const error = new Error('Project not found');
+      error.status = 404;
+      return next(error);
+    }
+
+    const categories = await getAllCategories();
+    const assignedCategories = await getCategoriesByServiceProjectId(projectId);
+
+    res.render('assign-categories', {
+      title: 'Assign Categories to Project',
+      projectId,
+      projectDetails,
+      categories,
+      assignedCategories
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const processAssignCategoriesForm = async (req, res, next) => {
+  try {
+    const projectId = req.params.projectId;
+    const selectedCategoryIds = req.body.categoryIds || [];
+
+    const categoryIdsArray = Array.isArray(selectedCategoryIds)
+      ? selectedCategoryIds
+      : [selectedCategoryIds];
+
+    await updateCategoryAssignments(projectId, categoryIdsArray);
+
+    req.flash('success', 'Categories updated successfully.');
+
+    res.redirect(`/project/${projectId}`);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   showCategoriesPage,
-  showCategoryDetailsPage
+  showCategoryDetailsPage,
+  showAssignCategoriesForm,
+  processAssignCategoriesForm
 };

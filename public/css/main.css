@@ -7,6 +7,18 @@
   --color-text: #1f2933;
   --color-muted: #5f6f7a;
   --color-border: #d9e2ec;
+  --color-success-text: #155724;
+  --color-success-bg: #d4edda;
+  --color-success-border: #c3e6cb;
+  --color-error-text: #721c24;
+  --color-error-bg: #f8d7da;
+  --color-error-border: #f5c6cb;
+  --color-warning-text: #856404;
+  --color-warning-bg: #fff3cd;
+  --color-warning-border: #ffeeba;
+  --color-info-text: #0c5460;
+  --color-info-bg: #d1ecf1;
+  --color-info-border: #bee5eb;
   --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.08);
   --radius-lg: 18px;
   --radius-md: 12px;
@@ -37,7 +49,13 @@ img {
 }
 
 a {
-  color: inherit;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+a:hover,
+a:focus {
+  color: var(--color-primary-dark);
 }
 
 header {
@@ -61,6 +79,7 @@ header {
   font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: 0.02em;
+  color: #ffffff;
 }
 
 nav {
@@ -82,6 +101,7 @@ nav a {
 nav a:hover,
 nav a:focus {
   background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
   outline: none;
 }
 
@@ -92,11 +112,18 @@ main {
 }
 
 .hero,
-.page-section {
+.page-section,
+main>ul,
+form {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
+}
+
+.hero,
+.page-section,
+form {
   padding: 2.5rem;
   margin-bottom: 2rem;
 }
@@ -140,8 +167,35 @@ p {
   margin-top: 0;
 }
 
+main>ul {
+  list-style: none;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  display: grid;
+  gap: 1rem;
+}
+
+main>ul li {
+  background: #eef6f8;
+  border: 1px solid #c7dfe6;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+main>ul li img {
+  width: 90px;
+  height: 70px;
+  object-fit: cover;
+  background: #ffffff;
+}
+
 .button,
 .btn,
+button,
 main a.button,
 main a.btn {
   display: inline-block;
@@ -158,8 +212,10 @@ main a.btn {
 
 .button:hover,
 .btn:hover,
+button:hover,
 .button:focus,
-.btn:focus {
+.btn:focus,
+button:focus {
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(242, 165, 65, 0.35);
   outline: none;
@@ -186,6 +242,13 @@ main a.btn {
   box-shadow: var(--shadow-soft);
 }
 
+.card p,
+.organization-card p,
+.project-card p,
+.category-card p {
+  margin-bottom: 0;
+}
+
 .category-list {
   list-style: none;
   padding: 0;
@@ -202,6 +265,83 @@ main a.btn {
   font-weight: 700;
   padding: 1rem 1.25rem;
   border-radius: var(--radius-md);
+}
+
+form {
+  max-width: 720px;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  color: var(--color-text);
+  background: #ffffff;
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid rgba(242, 165, 65, 0.35);
+  border-color: var(--color-secondary);
+}
+
+.alert {
+  max-width: var(--max-width);
+  margin: 1.25rem auto 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+}
+
+.alert p {
+  margin: 0;
+  color: inherit;
+}
+
+.alert.success {
+  color: var(--color-success-text);
+  background-color: var(--color-success-bg);
+  border-color: var(--color-success-border);
+}
+
+.alert.error {
+  color: var(--color-error-text);
+  background-color: var(--color-error-bg);
+  border-color: var(--color-error-border);
+}
+
+.alert.warning {
+  color: var(--color-warning-text);
+  background-color: var(--color-warning-bg);
+  border-color: var(--color-warning-border);
+}
+
+.alert.info {
+  color: var(--color-info-text);
+  background-color: var(--color-info-bg);
+  border-color: var(--color-info-border);
 }
 
 footer {
@@ -241,7 +381,8 @@ footer {
   }
 
   .hero,
-  .page-section {
+  .page-section,
+  form {
     padding: 1.5rem;
   }
 
@@ -251,6 +392,15 @@ footer {
   .categories-grid,
   .category-list {
     grid-template-columns: 1fr;
+  }
+
+  main>ul li {
+    grid-template-columns: 70px 1fr;
+  }
+
+  main>ul li img {
+    width: 70px;
+    height: 60px;
   }
 }
 
@@ -274,10 +424,24 @@ footer {
 
   .hero,
   .page-section,
+  form,
   .card,
   .organization-card,
   .project-card,
   .category-card {
     padding: 1.25rem;
+  }
+
+  main>ul {
+    padding: 1rem;
+  }
+
+  main>ul li {
+    grid-template-columns: 1fr;
+  }
+
+  main>ul li img {
+    width: 100%;
+    height: 150px;
   }
 }
