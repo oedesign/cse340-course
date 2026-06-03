@@ -5,6 +5,10 @@
       <%= category.name %>
     </h1>
 
+    <p>
+      <a href="/edit-category/<%= category.category_id %>">Edit Category</a>
+    </p>
+
     <h2>Service Projects in this Category</h2>
 
     <% if (projects.length> 0) { %>
@@ -31,6 +35,10 @@
       <% } else { %>
         <p>No service projects found for this category.</p>
         <% } %>
+
+          <p>
+            <a href="/categories">Back to Categories</a>
+          </p>
   </main>
 
   <%- include('partials/footer') %>
