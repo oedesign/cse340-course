@@ -1,0 +1,19 @@
+// clone into a specific folder name
+git clone https://github.com custom-folder-name
+
+// clone a specific branch
+git clone -b branch-name https://github.com
+
+// open project folder 
+code .
+
+// to see the username saved in your Git settings
+git config --global user.name
+
+// set your github username, email
+git config --global user.name " new character " 
+
+// upload changed from your computer to github 
+git push
+
+
