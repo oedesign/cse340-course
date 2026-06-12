@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+
+  <main>
+    <h1>Server Error</h1>
+
+    <p>
+      <%= error %>
+    </p>
+
+    <% if (stack) { %>
+      <pre><%= stack %></pre>
+      <% } %>
+  </main>
+
+  <%- include('../partials/footer') %>

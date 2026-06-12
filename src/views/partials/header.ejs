@@ -20,6 +20,14 @@
         <a href="/organizations">Organizations</a>
         <a href="/projects">Service Projects</a>
         <a href="/categories">Categories</a>
+        <a href="/dashboard">Dashboard</a>
+      
+        <% if (isLoggedIn) { %>
+          <a href="/logout">Logout</a>
+          <% } else { %>
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            <% } %>
       </nav>
     </div>
   </header>

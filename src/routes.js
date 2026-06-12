@@ -33,6 +33,16 @@ import {
   processAssignCategoriesForm
 } from './controllers/categories.js';
 
+import {
+  showUserRegistrationForm,
+  processUserRegistrationForm,
+  showLoginForm,
+  processLoginForm,
+  processLogout,
+  requireLogin,
+  showDashboard
+} from './controllers/users.js';
+
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
@@ -68,6 +78,22 @@ router.post('/edit-category/:id', processEditCategoryForm);
 
 router.get('/assign-categories/:projectId', showAssignCategoriesForm);
 router.post('/assign-categories/:projectId', processAssignCategoriesForm);
+
+/* User Registration Routes */
+router.get('/register', showUserRegistrationForm);
+router.post('/register', processUserRegistrationForm);
+
+/* User Login Routes */
+router.get('/login', showLoginForm);
+router.post('/login', processLoginForm);
+router.get('/logout', processLogout);
+
+/* Protected Dashboard Route */
+router.get(
+  '/dashboard',
+  requireLogin,
+  showDashboard
+);
 
 router.get('/test-error', testErrorPage);
 
