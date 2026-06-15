@@ -1,3 +1,4 @@
+import { isVolunteer } from '../models/volunteers.js';
 import { body, validationResult } from 'express-validator';
 import {
   getUpcomingProjects,
@@ -58,6 +59,30 @@ const showProjectsPage = async (req, res, next) => {
   }
 };
 
+// const showProjectDetailsPage = async (req, res, next) => {
+//   try {
+//     const projectId = req.params.id;
+
+//     const project = await getProjectDetails(projectId);
+
+//     if (!project) {
+//       const error = new Error('Project not found');
+//       error.status = 404;
+//       return next(error);
+//     }
+
+//     const categories = await getCategoriesByProjectId(projectId);
+
+//     res.render('project', {
+//       title: project.title,
+//       project,
+//       categories
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 const showProjectDetailsPage = async (req, res, next) => {
   try {
     const projectId = req.params.id;
@@ -72,10 +97,20 @@ const showProjectDetailsPage = async (req, res, next) => {
 
     const categories = await getCategoriesByProjectId(projectId);
 
+    let userIsVolunteer = false;
+
+    if (req.session.user) {
+      userIsVolunteer = await isVolunteer(
+        req.session.user.user_id,
+        projectId
+      );
+    }
+
     res.render('project', {
       title: project.title,
       project,
-      categories
+      categories,
+      userIsVolunteer
     });
   } catch (error) {
     next(error);

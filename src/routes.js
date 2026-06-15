@@ -45,6 +45,11 @@ import {
   showUsersPage
 } from './controllers/users.js';
 
+import {
+  volunteerForProject,
+  removeVolunteerFromProject
+} from './controllers/volunteers.js';
+
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
@@ -83,6 +88,19 @@ router.post(
 
 router.get('/projects', showProjectsPage);
 router.get('/project/:id', showProjectDetailsPage);
+
+/* Volunteer Routes */
+router.get(
+  '/project/:id/volunteer',
+  requireLogin,
+  volunteerForProject
+);
+
+router.get(
+  '/project/:id/remove-volunteer',
+  requireLogin,
+  removeVolunteerFromProject
+);
 
 /* Admin Only - Projects */
 router.get(

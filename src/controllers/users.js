@@ -5,6 +5,9 @@ import {
   getAllUsers
 } from '../models/users.js';
 
+import { getVolunteerProjects }
+  from '../models/volunteers.js';
+
 const saltRounds = 10;
 
 async function showUserRegistrationForm(req, res) {
@@ -156,15 +159,36 @@ const requireRole = (role) => {
   };
 };
 
-const showDashboard = (req, res) => {
-  const user = req.session.user;
+// const showDashboard = (req, res) => {
+//   const user = req.session.user;
 
-  res.render('dashboard', {
-    title: 'Dashboard',
-    name: user.name,
-    email: user.email
-  });
+//   res.render('dashboard', {
+//     title: 'Dashboard',
+//     name: user.name,
+//     email: user.email
+//   });
+// };
+
+
+const showDashboard = async (req, res, next) => {
+  try {
+    const user = req.session.user;
+
+    const volunteerProjects =
+      await getVolunteerProjects(user.user_id);
+
+    res.render('dashboard', {
+      title: 'Dashboard',
+      name: user.name,
+      email: user.email,
+      volunteerProjects
+    });
+
+  } catch (error) {
+    next(error);
+  }
 };
+
 
 /**
  * Display all users (Admin only)

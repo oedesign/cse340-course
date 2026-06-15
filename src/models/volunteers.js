@@ -39,22 +39,45 @@ export async function isVolunteer(userId, projectId) {
   return result.rows.length > 0;
 }
 
+// export async function getVolunteerProjects(userId) {
+//   const sql = `
+//     SELECT
+//       p.project_id,
+//       p.title,
+//       p.project_date,
+//       p.location,
+//       o.organization_id,
+//       o.organization_name
+//     FROM volunteer v
+//     JOIN project p
+//       ON v.project_id = p.project_id
+//     JOIN organization o
+//       ON p.organization_id = o.organization_id
+//     WHERE v.user_id = $1
+//     ORDER BY p.project_date;
+//   `;
+
+//   const result = await pool.query(sql, [userId]);
+
+//   return result.rows;
+// }
+
 export async function getVolunteerProjects(userId) {
   const sql = `
     SELECT
       p.project_id,
       p.title,
-      p.project_date,
+      p.date,
       p.location,
       o.organization_id,
-      o.organization_name
+      o.name AS organization_name
     FROM volunteer v
     JOIN project p
       ON v.project_id = p.project_id
     JOIN organization o
       ON p.organization_id = o.organization_id
     WHERE v.user_id = $1
-    ORDER BY p.project_date;
+    ORDER BY p.date;
   `;
 
   const result = await pool.query(sql, [userId]);
