@@ -6,6 +6,7 @@
     </h1>
 
     <% if (project) { %>
+
       <h2>
         <%= project.title %>
       </h2>
@@ -32,38 +33,45 @@
         </a>
       </p>
 
-      <p>
-        <a href="/edit-project/<%= project.project_id %>">
-          Edit Project
-        </a>
-      </p>
+      <% if (user && user.role_name==='admin' ) { %>
 
-      <p>
-        <a href="/assign-categories/<%= project.project_id %>">
-          Edit Categories
-        </a>
-      </p>
+        <p>
+          <a href="/edit-project/<%= project.project_id %>">
+            Edit Project
+          </a>
+        </p>
 
-      <section class="project-categories">
-        <h3>Categories</h3>
+        <p>
+          <a href="/assign-categories/<%= project.project_id %>">
+            Edit Categories
+          </a>
+        </p>
 
-        <% if (categories && categories.length> 0) { %>
-          <ul>
-            <% categories.forEach(category=> { %>
-              <li>
-                <a href="/category/<%= category.category_id %>">
-                  <%= category.name %>
-                </a>
-              </li>
-              <% }); %>
-          </ul>
-          <% } else { %>
-            <p>No categories listed for this project.</p>
-            <% } %>
-      </section>
-      <% } else { %>
-        <p>Project not found.</p>
         <% } %>
+
+          <section class="project-categories">
+            <h3>Categories</h3>
+
+            <% if (categories && categories.length> 0) { %>
+              <ul>
+                <% categories.forEach(category=> { %>
+                  <li>
+                    <a href="/category/<%= category.category_id %>">
+                      <%= category.name %>
+                    </a>
+                  </li>
+                  <% }); %>
+              </ul>
+              <% } else { %>
+                <p>No categories listed for this project.</p>
+                <% } %>
+          </section>
+
+          <% } else { %>
+
+            <p>Project not found.</p>
+
+            <% } %>
   </main>
 
   <%- include('partials/footer') %>

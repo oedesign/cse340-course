@@ -5,40 +5,51 @@
       <%= category.name %>
     </h1>
 
-    <p>
-      <a href="/edit-category/<%= category.category_id %>">Edit Category</a>
-    </p>
+    <% if (user && user.role_name==='admin' ) { %>
+      <p>
+        <a href="/edit-category/<%= category.category_id %>">
+          Edit Category
+        </a>
+      </p>
+      <% } %>
 
-    <h2>Service Projects in this Category</h2>
+        <h2>Service Projects in this Category</h2>
 
-    <% if (projects.length> 0) { %>
-      <ul>
-        <% projects.forEach(project=> { %>
-          <li>
-            <a href="/project/<%= project.project_id %>">
-              <%= project.title %>
-            </a>
+        <% if (projects.length> 0) { %>
 
-            <% if (project.project_date) { %>
-              - <%= project.project_date %>
-                <% } %>
+          <ul>
+            <% projects.forEach(project=> { %>
 
-                  <% if (project.organization_name) { %>
-                    by
-                    <a href="/organization/<%= project.organization_id %>">
-                      <%= project.organization_name %>
-                    </a>
+              <li>
+                <a href="/project/<%= project.project_id %>">
+                  <%= project.title %>
+                </a>
+
+                <% if (project.project_date) { %>
+                  - <%= project.project_date %>
                     <% } %>
-          </li>
-          <% }); %>
-      </ul>
-      <% } else { %>
-        <p>No service projects found for this category.</p>
-        <% } %>
 
-          <p>
-            <a href="/categories">Back to Categories</a>
-          </p>
+                      <% if (project.organization_name) { %>
+                        by
+                        <a href="/organization/<%= project.organization_id %>">
+                          <%= project.organization_name %>
+                        </a>
+                        <% } %>
+
+              </li>
+
+              <% }); %>
+          </ul>
+
+          <% } else { %>
+
+            <p>No service projects found for this category.</p>
+
+            <% } %>
+
+              <p>
+                <a href="/categories">Back to Categories</a>
+              </p>
   </main>
 
   <%- include('partials/footer') %>

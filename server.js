@@ -53,8 +53,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
-// Middleware to make variables available to all templates
 // Middleware to make variables available to all templates
 app.use((req, res, next) => {
 
@@ -64,11 +62,13 @@ app.use((req, res, next) => {
         res.locals.isLoggedIn = true;
     }
 
+    // Make current user available in all EJS templates
+    res.locals.user = req.session.user || null;
+
     res.locals.NODE_ENV = NODE_ENV;
 
     next();
 });
-
 
 /**
  * Routes

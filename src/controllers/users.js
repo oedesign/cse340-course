@@ -70,7 +70,7 @@ const processLoginForm = async (req, res) => {
         console.log('User logged in:', user);
       }
 
-          return req.session.save(() => {
+      return req.session.save(() => {
         res.redirect('/dashboard');
       });
     }
@@ -124,6 +124,38 @@ const requireLogin = (req, res, next) => {
   next();
 };
 
+/**
+ * Middleware factory to require a specific role
+ *
+ * @param {string} role
+ * @returns {Function}
+ */
+const requireRole = (role) => {
+  return (req, res, next) => {
+
+    // Must be logged in first
+    if (!req.session || !req.session.user) {
+      req.flash(
+        'error',
+        'You must be logged in to access this page.'
+      );
+
+      return res.redirect('/login');
+    }
+
+    // Must have the required role
+    if (req.session.user.role_name !== role) {
+      req.flash(
+        'error',
+        'You do not have permission to access this page.'
+      );
+
+      return res.redirect('/');
+    }
+
+    next();
+  };
+};
 
 const showDashboard = (req, res) => {
   const user = req.session.user;
@@ -135,7 +167,6 @@ const showDashboard = (req, res) => {
   });
 };
 
-
 export {
   showUserRegistrationForm,
   processUserRegistrationForm,
@@ -143,5 +174,6 @@ export {
   processLoginForm,
   processLogout,
   requireLogin,
+  requireRole,
   showDashboard
 };
