@@ -362,6 +362,25 @@ footer {
   color: #ffffff;
 }
 
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+
+
 @media (max-width: 800px) {
   .site-header {
     flex-direction: column;
